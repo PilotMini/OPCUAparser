@@ -150,9 +150,6 @@ void browseNodes(UA_Client* client, UA_NodeId nodeId, std::ofstream& outFile, st
             }
         }
     }
-
-    //UA_BrowseRequest_clear(bReq);
-    //UA_BrowseResponse_clear(bResp);
     delete bReq;
     delete bResp;
 }
@@ -191,7 +188,7 @@ int main(int argc, char* argv[]) {
     // Подключение к OPC-UA серверу
     UA_StatusCode status = UA_Client_connect(client, ip.c_str());
     if (status != UA_STATUSCODE_GOOD) {
-        //std::cerr << "Не удалось подключиться к серверу: " << UA_StatusCode_name(status) << std::endl;
+        std::cerr << "Failed to connect to server: " << UA_StatusCode_name(status) << std::endl;
         UA_Client_delete(client);
         return -1;
     }
@@ -199,7 +196,7 @@ int main(int argc, char* argv[]) {
     // Открываем файл для записи
     std::ofstream outFile("opcua_tags.txt");
     if (!outFile.is_open()) {
-        //std::cerr << "Не удалось открыть файл для записи!" << std::endl;
+        std::cerr << "Failed to open file for writing!" << std::endl;
         UA_Client_delete(client);
         return -1;
     }
